@@ -6,7 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * JavaFX App
@@ -16,12 +21,26 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+    public void start(Stage stage) throws IOException, URISyntaxException {
+        ArrayList<File> files = new ArrayList<>();
+        if (App.class.getResource("json/") != null) {
+            files = new ArrayList<File>(Arrays.asList(
+                new File(App.class.getResource("json/").toURI()).listFiles(new FileFilter() {
+                    public boolean accept(File file) {
+                        return file.getName().endsWith(".json");
+                    }
+                })
+            ));
+        }
+
+        scene = new Scene(loadFXML("timeTable"), 640, 480);
+        if (files.size() < 1) {
+            scene = new Scene(loadFXML("importView"), 640, 480);
+        }
         stage.setScene(scene);
         stage.show();
     }
-
+    
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
@@ -31,7 +50,7 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException {
         launch();
     }
 

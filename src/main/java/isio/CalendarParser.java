@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import biweekly.Biweekly;
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
+import biweekly.util.StringUtils;
 
 /**
  * Static CalendarParser class
@@ -32,7 +33,7 @@ public final class CalendarParser {
     public static File createRawFile(String fileUrl, String fileName) throws IOException {
         try {
             // create the file, if it doesn't exist already
-            fileName = "src/main/resources/raw/"+fileName+".txt";
+            fileName = "src/main/resources/isio/raw/"+fileName+".txt";
             File file = new File(fileName); 
             if (!file.createNewFile()) {
                 file.delete();
@@ -76,12 +77,12 @@ public final class CalendarParser {
         for (VEvent event : events) {
             JSONObject eventObject = new JSONObject();
             
-            if (event.getLastModified() != null) { eventObject.put("lastModified", event.getLastModified().getValue()); }
-            if (event.getUid() != null) { eventObject.put("UId", event.getUid().getValue()); }
-            if (event.getDateStart() != null) { eventObject.put("dateStart", event.getDateStart().getValue()); }
-            if (event.getDateEnd() != null) { eventObject.put("dateEnd", event.getDateEnd().getValue()); }
-            if (event.getSummary() != null) { eventObject.put("summary", event.getSummary().getValue()); }
-            if (event.getLocation() != null) { eventObject.put("location", event.getLocation().getValue()); }
+            if (event.getLastModified() != null) eventObject.put("lastModified", event.getLastModified().getValue());
+            if (event.getUid() != null) eventObject.put("UId", event.getUid().getValue());
+            if (event.getDateStart() != null) eventObject.put("dateStart", event.getDateStart().getValue());
+            if (event.getDateEnd() != null) eventObject.put("dateEnd", event.getDateEnd().getValue());
+            if (event.getSummary() != null) eventObject.put("summary", event.getSummary().getValue());
+            if (event.getLocation() != null) eventObject.put("location", event.getLocation().getValue());
 
             if (event.getDescription() == null) {
                 json.put(eventObject);
@@ -111,14 +112,19 @@ public final class CalendarParser {
             json.put(eventObject);
         }
 
-        // get filename without extension
-        String str = rawFile.getName().substring(0, rawFile.getName().lastIndexOf('.'));
-        String fileName = "src/main/resources/json/"+str+".json";
+        // get the group name for the file
+        String groupName = ical.getExperimentalProperties("X-WR-CALNAME").get(0).getValue();
+        groupName = org.apache.commons.lang3.StringUtils.substringBetween(groupName, "<", ">");
+        groupName = groupName.replace(" ", "_");
+        String fileName = "src/main/resources/isio/json/"+groupName+".json";
         
         // save the json 
         FileWriter writer = new FileWriter(fileName);
         json.write(writer, 4, 0);
         writer.close();
-    }
 
+        // rename the raw file to be clearer
+        File newName = new File("src/main/resources/isio/raw/"+groupName+".txt");
+        rawFile.renameTo(newName);
+    }
 }
