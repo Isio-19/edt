@@ -1,48 +1,60 @@
 package isio;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 public class ImportController {
     @FXML private TextField importLink;
+    @FXML private Text errorText;
 
     @FXML
-    private void createFile() throws IOException {
+    private void addLink() {
         try {
+            String fileName = "src/main/resources/isio/icsLinks.txt";
+            File file = new File(fileName);
+            
+            // create the file, in case it doesn't exist
+            file.createNewFile();
+            
+            // check if the link is already in the file
+            Boolean isInFile = false;
             String link = importLink.getText();
-            File RawFile = CalendarParser.createRawFile(link, "temp");
-            CalendarParser.createJsonFile(RawFile);  
+            FileReader reader = new FileReader(file);
+            BufferedReader br = new BufferedReader(reader);
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.equals(link)) {
+                    isInFile = true;
+                    break;
+                }
+            }
+            br.close();
+
+            if (isInFile) {
+                // update the label to tell the user that the link already exists in the file
+                errorText.setText("The link you're trying to import is already in the in database");
+                return;
+            }
+
+            // write the link into the file
+            FileWriter writer = new FileWriter(file, true);
+            BufferedWriter bw = new BufferedWriter(writer);
+
+            bw.write(link);
+            bw.newLine();
+            
+            bw.close();
         } catch (IOException e) {
-            System.err.println("File error");
             e.printStackTrace();
-        }
+        }   
+
     }
 
-    @FXML
-    private void importFile() throws IOException {
-        Stage stage = (Stage) importLink.getScene().getWindow();
-
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json) or TXT files (*.txt)", "*.json", "*.txt");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        File file = fileChooser.showOpenDialog(stage);
-        if (file == null) return;
-
-        if (file.getName().matches("*.txt")) {
-            CalendarParser.createJsonFile(file);
-        }
-
-        App.setRoot("timeTable");
-    }
-
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        System.out.println(new File(App.class.getResource("json/").toURI()).listFiles());
-    }
 }

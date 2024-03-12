@@ -1,5 +1,6 @@
-isio/App$1.class
 isio/App.class
+isio/Calendar.class
+isio/Event.class
 isio/CalendarParser.class
 isio/TimeTableController.class
 isio/ImportController.class

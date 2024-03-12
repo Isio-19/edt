@@ -10,8 +10,13 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * JavaFX App
@@ -22,21 +27,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, URISyntaxException {
-        ArrayList<File> files = new ArrayList<>();
-        if (App.class.getResource("json/") != null) {
-            files = new ArrayList<File>(Arrays.asList(
-                new File(App.class.getResource("json/").toURI()).listFiles(new FileFilter() {
-                    public boolean accept(File file) {
-                        return file.getName().endsWith(".json");
-                    }
-                })
-            ));
-        }
-
-        scene = new Scene(loadFXML("timeTable"), 640, 480);
-        if (files.size() < 1) {
-            scene = new Scene(loadFXML("importView"), 640, 480);
-        }
+        scene = new Scene(loadFXML("timeTableView"), 502, 581);
         stage.setScene(scene);
         stage.show();
     }
