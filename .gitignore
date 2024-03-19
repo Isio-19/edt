@@ -1,4 +1,2 @@
-src/main/resources/isio/json/*
-src/main/resources/isio/raw/*
 target/*
 .vscode/*
