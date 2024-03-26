@@ -1,6 +1,6 @@
 isio/App.class
-isio/Calendar.class
 isio/Event.class
+isio/EventCalendar.class
 isio/EventComparator.class
 isio/TimeTableController.class
 isio/ImportController.class

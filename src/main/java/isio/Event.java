@@ -1,12 +1,12 @@
 package isio;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Event {
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String location;
     private String summary;
     private String description;
@@ -16,7 +16,7 @@ public class Event {
     private String type;
     private ArrayList<String> td;
 
-    public Event(Date startDate, Date endDate, String location, String summary, String description) {
+    public Event(LocalDateTime startDate, LocalDateTime endDate, String location, String summary, String description) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
@@ -37,7 +37,7 @@ public class Event {
                         break;
 
                     case "TD":
-                        td = new ArrayList<String> (Arrays.asList(elList[1].split(", ")));
+                        td = new ArrayList<String>(Arrays.asList(elList[1].split(", ")));
                         break;
 
                     case "Type":
@@ -51,11 +51,11 @@ public class Event {
         }
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
@@ -83,5 +83,4 @@ public class Event {
         return td;
     }
 
-    
 }
