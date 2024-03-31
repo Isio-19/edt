@@ -74,15 +74,14 @@ public class EventCalendar {
             listEvents = new ArrayList<Event>();
 
             for (VEvent event : events) {
-                dtf = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy");            
+                // TODO: find a way to convert the time correctly while taking account of the timezone
+                dtf = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss v yyyy");            
                 dtf.withZone(ZoneId.of("Europe/Paris"));
 
                 LocalDateTime eventStartDate = null;
                 if (event.getDateStart() != null) {
                     String date = event.getDateStart().getValue().toString();
-                    System.out.println(date);
                     eventStartDate = LocalDateTime.parse(date, dtf);
-                    System.out.println(eventStartDate);
                 }
                 
                 LocalDateTime eventEndDate = null;

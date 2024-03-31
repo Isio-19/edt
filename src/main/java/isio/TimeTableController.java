@@ -78,7 +78,6 @@ public class TimeTableController {
             if (currentCalendar == null)
                 return;
 
-            // 
             ArrayList<Event> events = currentCalendar.getListEvents();
 
             // get the first and last day of the current week
@@ -88,8 +87,6 @@ public class TimeTableController {
 
             LocalDateTime firstDayTime = firstDay.atStartOfDay();    
             LocalDateTime lastDayTime = lastDay.atTime(23, 59, 59, 999999999);    
-
-            System.out.println("lastDayTime: " + lastDayTime);
 
             // find the index corresponding to the dates
             int firstDayIndex = 0;
@@ -106,6 +103,20 @@ public class TimeTableController {
                     lastDayIndex = i;                    
                     break;
                 }
+
+            ArrayList<Event> eventsToDisplay = new ArrayList<>();
+            int index = firstDayIndex;
+            for (int i=0; i<5; i++) {
+                ArrayList<Event> listEvents = new ArrayList<>();
+                for (int tempI = index; tempI<lastDayIndex+1; tempI++) {
+                    listEvents.add(events.get(tempI));
+                }
+                eventsToDisplay.add(events.get());
+            }
+
+
+            // display the events for the week
+
 
         } catch (ParseException e) {
             e.printStackTrace();
