@@ -104,15 +104,18 @@ public class TimeTableController {
                     break;
                 }
 
-            ArrayList<Event> eventsToDisplay = new ArrayList<>();
-            int index = firstDayIndex;
-            for (int i=0; i<5; i++) {
-                ArrayList<Event> listEvents = new ArrayList<>();
-                for (int tempI = index; tempI<lastDayIndex+1; tempI++) {
-                    listEvents.add(events.get(tempI));
-                }
-                eventsToDisplay.add(events.get());
-            }
+            System.out.println(events.get(firstDayIndex).getStartDate());
+            System.out.println(events.get(lastDayIndex).getStartDate());
+
+            // ArrayList<Event> eventsToDisplay = new ArrayList<>();
+            // int index = firstDayIndex;
+            // for (int i=0; i<5; i++) {
+            //     ArrayList<Event> listEvents = new ArrayList<>();
+            //     for (int tempI = index; tempI<lastDayIndex+1; tempI++) {
+            //         listEvents.add(events.get(tempI));
+            //     }
+            //     eventsToDisplay.add(events.get());
+            // }
 
 
             // display the events for the week
@@ -125,7 +128,7 @@ public class TimeTableController {
 
     private List<LocalDate> getFirstAndLastDates(LocalDate date) throws ParseException {
         LocalDate firstDayOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate lastDayOfWeek = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+        LocalDate lastDayOfWeek = firstDayOfWeek.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
 
         return Arrays.asList(firstDayOfWeek, lastDayOfWeek);
     }

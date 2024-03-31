@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringUtils;
@@ -75,7 +76,7 @@ public class EventCalendar {
 
             for (VEvent event : events) {
                 // TODO: find a way to convert the time correctly while taking account of the timezone
-                dtf = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss v yyyy");            
+                dtf = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);            
                 dtf.withZone(ZoneId.of("Europe/Paris"));
 
                 LocalDateTime eventStartDate = null;
