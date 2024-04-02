@@ -2,12 +2,10 @@ package isio.componentController;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class EventController {
-    @FXML
-    private Label mondayLabel;
     @FXML
     private VBox boxVBox;
     @FXML
@@ -19,8 +17,15 @@ public class EventController {
     @FXML
     private Label descriptionLabel;
 
-    public void initialize() {
+    private VBox dayLabel;
+    private Pane contentPane;
 
+    public void setDayLabel(VBox dayLabel) {
+        this.dayLabel = dayLabel;
+    }
+
+    public void setContentPane(Pane contentPane) {
+        this.contentPane = contentPane;
     }
 
     public void setText(String time, String location, String description) {
@@ -29,10 +34,9 @@ public class EventController {
         descriptionLabel.setText(description);
     }
 
-    public void setDimensions(float height, HBox hbox, Label label) {
-        boxVBox.prefHeightProperty()
-                .bind(hbox.heightProperty().subtract(label.getHeight()).divide(21).multiply(height));
-        boxVBox.prefWidthProperty().bind(hbox.widthProperty().divide(5));
+    public void setDimensions(float height) {
+        boxVBox.prefHeightProperty().bind(contentPane.prefHeightProperty().subtract(dayLabel.prefHeightProperty()).divide(21).multiply(height));
+        boxVBox.prefWidthProperty().bind(contentPane.prefWidthProperty().divide(5));
     }
 
     public void setCssClass(String string) {
@@ -45,7 +49,7 @@ public class EventController {
         // accented-header-color
         // accent-border-color
         // transparent-content-color
-        
+
         // default
         headerVBox.getStyleClass().add("neutral-header-color");
         boxVBox.getStyleClass().add("no-border-color");

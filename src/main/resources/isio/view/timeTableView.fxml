@@ -12,7 +12,7 @@
 
 <VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isio.TimeTableController">
    <children>
-      <MenuBar>
+      <MenuBar fx:id="menuBar">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
@@ -43,8 +43,7 @@
                   <Button fx:id="nextButton" alignment="CENTER_RIGHT" mnemonicParsing="false" text="&gt;" />
                </children>
             </HBox>
-            <HBox fx:id="calendarHBox" prefHeight="100.0" prefWidth="200.0" />
-            <Pane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="contentPane" style="-fx-border-color: #ff0000;" />
          </children>
       </VBox>
    </children>

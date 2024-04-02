@@ -13,28 +13,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import isio.componentController.DayController;
+import isio.componentController.WeekController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TimeTableController {
+    @FXML 
+    private VBox root;
+    @FXML 
+    private MenuBar menuBar;
+    @FXML 
+    private HBox buttonHBox;
     @FXML
-    private VBox monday;
-    @FXML
-    private VBox tuesday;
-    @FXML
-    private VBox wednesday;
-    @FXML
-    private VBox thursday;
-    @FXML
-    private VBox friday;
-    @FXML
-    private HBox calendarHBox;
+    private Pane contentPane;
 
     private List<EventCalendar> calendars;
     private EventCalendar currentCalendar = null;
@@ -42,6 +40,9 @@ public class TimeTableController {
 
     @FXML
     public void initialize() {
+        contentPane.prefHeightProperty().bind(root.heightProperty().subtract(menuBar.prefHeightProperty()).subtract(buttonHBox.prefHeightProperty()));
+        contentPane.prefWidthProperty().bind(root.widthProperty());
+
         // get the ics links from the icsLinks file
         ArrayList<String> links = (ArrayList<String>) readLinksFile();
 
@@ -151,19 +152,15 @@ public class TimeTableController {
             // display the events for the week
             ArrayList<ArrayList<Event>> eventWeek = new ArrayList<>(
                     Arrays.asList(mondayEvent, tuesdayEvent, wednesdayEvent, thursdayEvent, fridayEvent));
-            ArrayList<VBox> week = new ArrayList<>(Arrays.asList(monday, tuesday, wednesday, thursday, friday));
 
-            for (int i = 0; i < week.size(); i++) {
-                ArrayList<Event> eventForTheDay = eventWeek.get(i);
+            FXMLLoader eventLoader = new FXMLLoader(
+                    App.class.getResource("components/week.fxml"));
+            contentPane.getChildren().add(eventLoader.load());
+            WeekController controller = eventLoader.getController();    
+            controller.setContentContainer(contentPane);
+            controller.insertDays(eventWeek, firstDay);
+            controller.setDimensions();
 
-                FXMLLoader eventLoader = new FXMLLoader(
-                        TimeTableController.class.getResource("components/day.fxml"));
-                calendarHBox.getChildren().add(eventLoader.load());
-                DayController controller = eventLoader.getController();
-                controller.setCalendarHBox(calendarHBox);
-                controller.insertEvents(firstDay.plusDays(i), eventForTheDay);
-                controller.setDimensions(true);
-            }
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {

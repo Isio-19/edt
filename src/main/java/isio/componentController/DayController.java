@@ -8,17 +8,19 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import isio.App;
 import isio.Event;
-import isio.TimeTableController;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class DayController {
+    @FXML
+    private VBox dayLabelHeader;
     @FXML
     private Label dayValue;
     @FXML
@@ -26,14 +28,10 @@ public class DayController {
     @FXML
     private VBox dayVBox;
 
-    private HBox calendarHBox;
+    private Pane contentPane;
 
-    public void initialize() {
-
-    }
-
-    public void setCalendarHBox(HBox hbox) {
-        calendarHBox = hbox;
+    public void setContentPane(Pane contentPane) {
+        this.contentPane = contentPane;
     }
 
     public void insertEvents(LocalDate day, List<Event> eventList) throws IOException {
@@ -65,7 +63,7 @@ public class DayController {
             Event currentEvent = eventList.get(eventIndex);
 
             FXMLLoader eventLoader = new FXMLLoader(
-                    TimeTableController.class.getResource("components/event.fxml"));
+                    App.class.getResource("components/event.fxml"));
             dayVBox.getChildren().add(eventLoader.load());
 
             EventController controller = eventLoader.getController();
@@ -86,8 +84,9 @@ public class DayController {
 
             controller.setText(timeString, currentEvent.getLocation(), currentEvent.getDescription());
             controller.setCssClass(currentEvent.getType());
-            controller.setDimensions(startDateTime.until(currentEvent.getEndDate(), ChronoUnit.MINUTES) / 30,
-                    calendarHBox, dayLabel);
+            controller.setDayLabel(dayLabelHeader);
+            controller.setContentPane(contentPane);
+            controller.setDimensions(startDateTime.until(currentEvent.getEndDate(), ChronoUnit.MINUTES) / 30);
 
             if (eventIndex < eventList.size() - 1) {
                 tempEvent = eventList.get(eventIndex + 1);
@@ -105,20 +104,24 @@ public class DayController {
         float size = start.until(end, ChronoUnit.MINUTES) / 30;
 
         FXMLLoader eventLoader = new FXMLLoader(
-                TimeTableController.class.getResource("components/event.fxml"));
+                App.class.getResource("components/event.fxml"));
         nodeList.add(eventLoader.load());
         EventController controller = eventLoader.getController();
         controller.setText(null, null, null);
         controller.setCssClass("filler");
-        controller.setDimensions(size, calendarHBox, dayLabel);
+        controller.setDayLabel(dayLabelHeader);
+        controller.setContentPane(contentPane);
+        controller.setDimensions(size);
     }
 
     public void setDimensions(boolean week) {
         if (week) {
-            dayVBox.prefWidthProperty().bind(calendarHBox.widthProperty().divide(5));
+            dayVBox.prefHeightProperty().bind(contentPane.prefHeightProperty().divide(5));
+            dayVBox.prefWidthProperty().bind(contentPane.prefWidthProperty());
             return;
         }
 
-        dayVBox.prefWidthProperty().bind(calendarHBox.widthProperty());
+        dayVBox.prefHeightProperty().bind(contentPane.prefHeightProperty());
+        dayVBox.prefWidthProperty().bind(contentPane.prefWidthProperty());
     }
 }
