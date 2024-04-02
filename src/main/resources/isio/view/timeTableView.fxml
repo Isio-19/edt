@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isio.TimeTableController">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isio.TimeTableController">
    <children>
       <MenuBar>
          <menus>
@@ -29,34 +32,20 @@
             </Menu>
          </menus>
       </MenuBar>
-      <HBox fx:id="calendarHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: black;">
+      <VBox fx:id="calendarVBox">
          <children>
-            <VBox fx:id="monday" prefHeight="550.0" prefWidth="100.0" style="-fx-border-color: black;">
+            <HBox fx:id="buttonHBox" alignment="CENTER" maxWidth="1.7976931348623157E308">
                <children>
-                  <Label fx:id="mondayLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lundi" />
+                  <Button fx:id="previousButton" mnemonicParsing="false" text="&lt;" />
+                  <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                  <Label fx:id="contentLabel" alignment="CENTER" text="contentLabel" />
+                  <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="nextButton" alignment="CENTER_RIGHT" mnemonicParsing="false" text="&gt;" />
                </children>
-            </VBox>
-            <VBox fx:id="tuesday" prefHeight="550.0" prefWidth="100.0" style="-fx-border-color: black;">
-               <children>
-                  <Label fx:id="tuesdayLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Mardi" />
-               </children>
-            </VBox>
-            <VBox fx:id="wednesday" prefHeight="550.0" prefWidth="100.0" style="-fx-border-color: black;">
-               <children>
-                  <Label fx:id="wednesdayLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Mercredi" />
-               </children>
-            </VBox>
-            <VBox fx:id="thursday" prefHeight="550.0" prefWidth="100.0" style="-fx-border-color: black;">
-               <children>
-                  <Label fx:id="thursdayLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Jeudi" />
-               </children>
-            </VBox>
-            <VBox fx:id="friday" prefHeight="550.0" prefWidth="100.0" style="-fx-border-color: black;">
-               <children>
-                  <Label fx:id="fridayLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Vendredi" />
-               </children>
-            </VBox>
+            </HBox>
+            <HBox fx:id="calendarHBox" prefHeight="100.0" prefWidth="200.0" />
+            <Pane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0" />
          </children>
-      </HBox>
+      </VBox>
    </children>
 </VBox>

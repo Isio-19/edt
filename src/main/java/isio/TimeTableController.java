@@ -8,20 +8,15 @@ import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import isio.componentController.EventController;
-import javafx.collections.ObservableList;
+import isio.componentController.DayController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -40,11 +35,10 @@ public class TimeTableController {
     private VBox friday;
     @FXML
     private HBox calendarHBox;
-    @FXML
-    private Label mondayLabel;
 
     private List<EventCalendar> calendars;
     private EventCalendar currentCalendar = null;
+    private LocalDate today;
 
     @FXML
     public void initialize() {
@@ -60,8 +54,10 @@ public class TimeTableController {
         if (calendars.size() > 0)
             currentCalendar = calendars.get(0);
 
+        today = LocalDate.now();
+
         // print the events of the selected calendar
-        showCurrentCalendar();
+        showWeek();
     }
 
     private List<String> readLinksFile() {
@@ -85,7 +81,7 @@ public class TimeTableController {
         return returnList;
     }
 
-    private void showCurrentCalendar() {
+    private void showWeek() {
         try {
             if (currentCalendar == null)
                 return;
@@ -93,7 +89,7 @@ public class TimeTableController {
             ArrayList<Event> events = currentCalendar.getListEvents();
 
             // get the first and last day of the current week
-            List<LocalDate> temp = getFirstAndLastDates(LocalDate.now());
+            List<LocalDate> temp = getFirstAndLastDates(today);
             LocalDate firstDay = temp.get(0);
             LocalDate lastDay = temp.get(1);
 
@@ -159,80 +155,20 @@ public class TimeTableController {
 
             for (int i = 0; i < week.size(); i++) {
                 ArrayList<Event> eventForTheDay = eventWeek.get(i);
-                Event tempEvent;
 
-                LocalDateTime eightThirtyAm = LocalDateTime.now().withHour(8).withMinute(30).withSecond(0)
-                .withNano(0);
-                LocalDateTime sevenPm = LocalDateTime.now().withHour(19).withMinute(0).withSecond(0)
-                .withNano(0);
-
-                if (eventForTheDay.size() == 0) {
-                    makeFillerEvent(eightThirtyAm, sevenPm, week.get(i).getChildren());
-                    continue;
-                }
-
-                tempEvent = eventForTheDay.get(0);
-                makeFillerEvent(eightThirtyAm, tempEvent.getStartDate(), week.get(i).getChildren());
-
-                for (int eventIndex = 0; eventIndex < eventForTheDay.size(); eventIndex++) {
-                    Event currentEvent = eventForTheDay.get(eventIndex);
-
-                    FXMLLoader eventLoader = new FXMLLoader(
-                            TimeTableController.class.getResource("components/event.fxml"));
-                    week.get(i).getChildren().add(eventLoader.load());
-
-                    EventController controller = eventLoader.getController();
-
-                    LocalDateTime startDateTime = currentEvent.getStartDate();
-                    String hour = "" + startDateTime.getHour();
-                    if (hour.length() == 1)
-                        hour = "0" + hour;
-
-                    String minute = "" + startDateTime.getMinute();
-                    if (minute.length() == 1)
-                        minute = "0" + minute;
-
-                    String timeString = hour + ":" + minute;
-
-                    if (currentEvent.getType() != null)
-                        timeString += " / " + currentEvent.getType();
-
-                    controller.setTime(timeString);
-                    controller.setLocation(currentEvent.getLocation());
-                    controller.setDescription(currentEvent.getDescription());
-                    controller.setCssClass(currentEvent.getType());
-                    controller.setDimensions(startDateTime.until(currentEvent.getEndDate(), ChronoUnit.MINUTES) / 30, calendarHBox, mondayLabel);
-
-                    if (eventIndex < eventForTheDay.size() - 1) {
-                        tempEvent = eventForTheDay.get(eventIndex+1);
-                        makeFillerEvent(currentEvent.getEndDate(), tempEvent.getStartDate(), week.get(i).getChildren());
-                    }
-                }
-
-                tempEvent = eventForTheDay.get(eventForTheDay.size() - 1);
-                makeFillerEvent(tempEvent.getEndDate(), sevenPm, week.get(i).getChildren());
+                FXMLLoader eventLoader = new FXMLLoader(
+                        TimeTableController.class.getResource("components/day.fxml"));
+                calendarHBox.getChildren().add(eventLoader.load());
+                DayController controller = eventLoader.getController();
+                controller.setCalendarHBox(calendarHBox);
+                controller.insertEvents(firstDay.plusDays(i), eventForTheDay);
+                controller.setDimensions(true);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void makeFillerEvent(LocalDateTime start, LocalDateTime end, ObservableList<Node> nodeList)
-            throws IOException {
-        // get the size of the element in units of 30 minutes
-        float size = start.until(end, ChronoUnit.MINUTES) / 30;
-
-        FXMLLoader eventLoader = new FXMLLoader(
-                TimeTableController.class.getResource("components/event.fxml"));
-        nodeList.add(eventLoader.load());
-        EventController controller = eventLoader.getController();
-        controller.setTime(null);
-        controller.setLocation(null);
-        controller.setDescription(null);
-        controller.setCssClass("filler");
-        controller.setDimensions(size, calendarHBox, mondayLabel);
     }
 
     private List<LocalDate> getFirstAndLastDates(LocalDate date) throws ParseException {
