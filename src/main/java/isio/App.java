@@ -18,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, URISyntaxException {
-        scene = new Scene(loadFXML("timeTableView"), 502, 581);
+        scene = new Scene(loadFXML("view/timeTableView"), 502, 581);
         stage.setScene(scene);
         stage.show();
     }

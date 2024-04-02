@@ -10,7 +10,7 @@ public class Event {
     private String location;
     private String summary;
     private String description;
-    private String prof;
+    private ArrayList<String> prof;
 
     // TODO: change to enum
     private String type;
@@ -33,7 +33,7 @@ public class Event {
 
                 switch (elList[0]) {
                     case "Enseignant":
-                        prof = elList[1];
+                        prof = new ArrayList<String>(Arrays.asList(elList[1].split(", ")));
                         break;
 
                     case "TD":
@@ -41,7 +41,7 @@ public class Event {
                         break;
 
                     case "Type":
-                        type = elList[1];
+                        type = elList[1].replace("\n", "");
                         break;
 
                     default:
@@ -49,6 +49,9 @@ public class Event {
                 }
             }
         }
+
+        if (type == null)
+            type = summary.split(" - ")[0];
     }
 
     public LocalDateTime getStartDate() {
@@ -71,8 +74,8 @@ public class Event {
         return description;
     }
 
-    public String getProf() {
-        return prof;
+    public ArrayList<String> getProf() {
+        return new ArrayList<String>(prof);
     }
 
     public String getType() {
@@ -80,7 +83,7 @@ public class Event {
     }
 
     public ArrayList<String> getTd() {
-        return td;
+        return new ArrayList<String>(td);
     }
 
 }

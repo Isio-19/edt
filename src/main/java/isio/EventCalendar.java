@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -40,7 +41,7 @@ public class EventCalendar {
     public EventCalendar(String link) {
         try {
             URL url = new URL(link);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
             String linkContent = "";
             String line;
             while ((line = reader.readLine()) != null)
@@ -97,11 +98,11 @@ public class EventCalendar {
 
                 String eventSummary = null;
                 if (event.getSummary() != null)
-                    eventSummary = event.getSummary().getValue();
+                    eventSummary = StringUtils.stripAccents(event.getSummary().getValue());
 
                 String eventDescription = null;
                 if (event.getDescription() != null)
-                    eventDescription = event.getDescription().getValue();
+                    eventDescription = StringUtils.stripAccents(event.getDescription().getValue());
 
                 Event eventToAdd = new Event(eventStartDate, eventEndDate, eventLocation, eventSummary,
                         eventDescription);
