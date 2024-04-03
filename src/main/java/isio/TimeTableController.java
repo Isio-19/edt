@@ -48,7 +48,7 @@ public class TimeTableController {
     private LocalDate today;
 
     // TODO: make into an enum
-    private String displayMode = "week";
+    private String displayMode = "day";
 
     @FXML
     public void initialize() {
@@ -130,7 +130,7 @@ public class TimeTableController {
             return;
 
         ArrayList<Event> events = currentCalendar.getListEvents();
-
+        
         // set the label to the correct value
         String tempText = StringUtils.capitalize(today.getMonth().toString().toLowerCase()) + " "
                 + today.getDayOfMonth();
@@ -139,7 +139,7 @@ public class TimeTableController {
         // get the events for today
         ArrayList<Event> eventForTheDay = new ArrayList<>();
         for (Event event : events)
-            if (event.getStartDate().toLocalDate() == today)
+            if (event.getStartDate().toLocalDate().isEqual(today))
                 eventForTheDay.add(event);
 
         FXMLLoader eventLoader = new FXMLLoader(
@@ -253,6 +253,8 @@ public class TimeTableController {
     public void previousDate() {
         switch (displayMode) {
             case "day":
+                if (today.getDayOfWeek() == DayOfWeek.MONDAY) 
+                    today = today.minusDays(2);
                 today = today.minusDays(1);
                 break;
             case "week":
@@ -273,6 +275,8 @@ public class TimeTableController {
     public void nextDate() {
         switch (displayMode) {
             case "day":
+                if (today.getDayOfWeek() == DayOfWeek.FRIDAY)
+                    today = today.plusDays(2);
                 today = today.plusDays(1);
                 break;
             case "week":
