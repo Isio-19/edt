@@ -116,8 +116,8 @@ public class DayController {
 
     public void setDimensions(boolean week) {
         if (week) {
-            dayVBox.prefHeightProperty().bind(contentPane.prefHeightProperty().divide(5));
-            dayVBox.prefWidthProperty().bind(contentPane.prefWidthProperty());
+            dayVBox.prefHeightProperty().bind(contentPane.prefHeightProperty());
+            dayVBox.prefWidthProperty().bind(contentPane.prefWidthProperty().divide(5));
             return;
         }
 

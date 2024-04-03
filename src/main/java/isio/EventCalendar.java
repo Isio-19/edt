@@ -139,4 +139,8 @@ public class EventCalendar {
         ArrayList<Event> returnList = new ArrayList<Event>(this.listEvents);
         return returnList;
     }
+
+    public int getSize() {
+        return listEvents.size();
+    }
 }
