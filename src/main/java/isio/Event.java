@@ -41,7 +41,7 @@ public class Event {
                         break;
 
                     case "Type":
-                        type = elList[1].replace("\n", "");
+                        type = elList[1].replace("\n", "").toString();
                         break;
 
                     default:

@@ -1,0 +1,23 @@
+.neutral-header-color, .neutral-content-color {
+    -fx-background-color: #d1e8ff;
+}
+
+.no-border-color {
+    -fx-border-color: transparent;
+}
+
+.disabled-header-color, .disabled-content-color {
+    -fx-background-color: #eaeef2;
+}
+
+.accented-header-color {
+    -fx-background-color: #ef5151;
+}
+
+.accent-border-color {
+    -fx-border-color: #ef5151;
+}
+
+.transparent-content-color {
+    -fx-background-color: transparent;
+}

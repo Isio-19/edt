@@ -1,5 +1,6 @@
 package isio.componentController;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -35,44 +36,37 @@ public class EventController {
     }
 
     public void setDimensions(float height) {
-        boxVBox.prefHeightProperty().bind(contentPane.prefHeightProperty().subtract(dayLabel.prefHeightProperty()).divide(21).multiply(height));
+        boxVBox.prefHeightProperty().bind(
+                contentPane.prefHeightProperty().subtract(dayLabel.prefHeightProperty()).divide(21).multiply(height));
         boxVBox.prefWidthProperty().bind(contentPane.prefWidthProperty().divide(5));
     }
 
     public void setCssClass(String string) {
-        // unique classes for event
-        // neutral-header-color
-        // no-border-color
-        // neutral-content-color
-        // disabled-header-color
-        // disabled-content-color
-        // accented-header-color
-        // accent-border-color
-        // transparent-content-color
-
-        // default
-        headerVBox.getStyleClass().add("neutral-header-color");
-        boxVBox.getStyleClass().add("no-border-color");
-        boxVBox.getStyleClass().add("neutral-content-color");
-
+        headerVBox.getStyleClass().clear();
+        boxVBox.getStyleClass().clear();
         switch (string) {
-            case "Ferie":
-            case "Vacances":
+            case "ferie":
+            case "vacances":
                 headerVBox.getStyleClass().add("disabled-header-color");
                 boxVBox.getStyleClass().add("no-border-color");
                 boxVBox.getStyleClass().add("disabled-content-color");
                 break;
 
-            case "Evaluation":
-            case "Rattrapage":
+            case "evaluation":
+            case "rattrapage":
                 headerVBox.getStyleClass().add("accented-header-color");
                 boxVBox.getStyleClass().add("accent-border-color");
                 boxVBox.getStyleClass().add("neutral-content-color");
                 break;
 
-            // for fillers
-            default:
+            case "filler":
                 boxVBox.getStyleClass().add("transparent-content-color");
+                break;
+
+            default:
+                headerVBox.getStyleClass().add("neutral-header-color");
+                boxVBox.getStyleClass().add("no-border-color");
+                boxVBox.getStyleClass().add("neutral-content-color");
                 break;
         }
     }

@@ -98,8 +98,7 @@ public class EventCalendar {
                 if (event.getDescription() != null)
                     eventDescription = StringUtils.stripAccents(event.getDescription().getValue());
 
-                Event eventToAdd = new Event(eventStartDate, eventEndDate, eventLocation, eventSummary,
-                        eventDescription);
+                Event eventToAdd = new Event(eventStartDate, eventEndDate, eventLocation, eventSummary, eventDescription);
                         
                 listEvents.add(eventToAdd);
             }

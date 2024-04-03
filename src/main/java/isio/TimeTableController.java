@@ -19,19 +19,18 @@ import isio.componentController.DayController;
 import isio.componentController.WeekController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TimeTableController {
     @FXML
-    private VBox root;
+    private AnchorPane root;
     @FXML
     private MenuBar menuBar;
     @FXML
@@ -39,7 +38,7 @@ public class TimeTableController {
     @FXML
     private Pane contentPane;
     @FXML
-    private VBox settingPane;
+    private Pane settingPane;
     @FXML
     private Label contentLabel;
 
@@ -48,7 +47,7 @@ public class TimeTableController {
     private LocalDate today;
 
     // TODO: make into an enum
-    private String displayMode = "day";
+    private String displayMode = "week";
 
     @FXML
     public void initialize() {
@@ -130,7 +129,7 @@ public class TimeTableController {
             return;
 
         ArrayList<Event> events = currentCalendar.getListEvents();
-        
+
         // set the label to the correct value
         String tempText = StringUtils.capitalize(today.getMonth().toString().toLowerCase()) + " "
                 + today.getDayOfMonth();
@@ -253,7 +252,7 @@ public class TimeTableController {
     public void previousDate() {
         switch (displayMode) {
             case "day":
-                if (today.getDayOfWeek() == DayOfWeek.MONDAY) 
+                if (today.getDayOfWeek() == DayOfWeek.MONDAY)
                     today = today.minusDays(2);
                 today = today.minusDays(1);
                 break;
@@ -285,16 +284,15 @@ public class TimeTableController {
             case "month":
                 today = today.plusMonths(1);
                 break;
-        
+
             default:
                 break;
         }
 
         displayCalendar();
-}
+    }
 
     // TODO: intergrate the dateSelector in the FXMl to interact with LocalDate
-    // today
 
     @FXML
     public void openAddLinkPopUp() {
