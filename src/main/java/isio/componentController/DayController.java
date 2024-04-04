@@ -30,6 +30,10 @@ public class DayController {
 
     private Pane contentPane;
 
+    public void initialize() {
+        dayVBox.getStyleClass().add("component-border");
+    }
+    
     public void setContentPane(Pane contentPane) {
         this.contentPane = contentPane;
     }

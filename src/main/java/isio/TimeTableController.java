@@ -56,7 +56,8 @@ public class TimeTableController {
     public void initialize() {
         contentPane.prefHeightProperty().bind(
                 root.heightProperty().subtract(menuBar.prefHeightProperty()).subtract(buttonHBox.prefHeightProperty()));
-        contentPane.prefWidthProperty().bind(root.widthProperty().subtract(settingPane.prefWidthProperty()));
+        contentPane.prefWidthProperty().bind(root.widthProperty().subtract(250));
+        settingPane.prefWidthProperty().setValue(250);
 
         // get the ics links from the icsLinks file
         ArrayList<String> links = (ArrayList<String>) readLinksFile();

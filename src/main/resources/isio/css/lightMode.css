@@ -1,3 +1,15 @@
+.root {
+    -fx-background-color: #fafafa;
+}
+
+.label {
+    -fx-text-fill: #212121;
+}
+
+.Separator {
+    -fx-border-color: #212121;
+}
+
 .neutral-header-color, .neutral-content-color {
     -fx-background-color: #d1e8ff;
 }
@@ -20,4 +32,8 @@
 
 .transparent-content-color {
     -fx-background-color: transparent;
+}
+
+.component-border {
+    -fx-border-color: #e1e1ff;
 }

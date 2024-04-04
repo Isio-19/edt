@@ -3,12 +3,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="boxVBox" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isio.componentController.EventController">
+<VBox fx:id="boxVBox" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="isio.componentController.EventController">
    <children>
       <VBox fx:id="headerVBox">
          <children>
             <Label fx:id="timeLabel" text="time" />
-            <Label fx:id="locationLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="location" />
+            <Label fx:id="locationLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
+               text="location" />
          </children>
       </VBox>
       <Label fx:id="descriptionLabel" text="description" />

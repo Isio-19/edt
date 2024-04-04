@@ -8,10 +8,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isio.ImportController">
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/21"
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="isio.ImportController">
    <children>
       <Label text="Import ICS calendar through a link" />
-      <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
+      <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0"
+         textAlignment="CENTER" />
       <HBox spacing="10.0">
          <children>
             <TextField fx:id="importLink" prefWidth="400.0" HBox.hgrow="ALWAYS" />
