@@ -71,7 +71,7 @@
                         <Separator maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                         </Separator>
                         <Label text="Display Settings" />
-                        <ToggleButton mnemonicParsing="false" text="Dark Mode" />
+                        <ToggleButton mnemonicParsing="false" text="Dark Mode" onAction="#switchTheme"/>
                      </children>
                   </VBox>
                </children>

@@ -49,6 +49,9 @@ public class TimeTableController {
     // TODO: make into an enum
     private String displayMode = "week";
 
+    // TODO: get theme for user file
+    private String theme = "light";
+
     @FXML
     public void initialize() {
         contentPane.prefHeightProperty().bind(
@@ -290,6 +293,20 @@ public class TimeTableController {
         }
 
         displayCalendar();
+    }
+
+    @FXML
+    public void switchTheme() {
+        Scene scene = root.getScene();
+        scene.getStylesheets().clear();
+
+        if (theme == "light") {
+            theme = "dark";
+            scene.getStylesheets().add(getClass().getResource("css/darkMode.css").toExternalForm());
+            return;
+        }
+        theme = "light";
+        scene.getStylesheets().add(getClass().getResource("css/lightMode.css").toExternalForm());
     }
 
     // TODO: intergrate the dateSelector in the FXMl to interact with LocalDate
