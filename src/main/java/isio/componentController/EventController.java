@@ -1,6 +1,5 @@
 package isio.componentController;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -42,18 +41,20 @@ public class EventController {
     }
 
     public void setCssClass(String string) {
+        System.out.println(string);
+
         headerVBox.getStyleClass().clear();
         boxVBox.getStyleClass().clear();
         switch (string) {
-            case "ferie":
-            case "vacances":
+            case "Ferie":
+            case "Vacances":
                 headerVBox.getStyleClass().add("disabled-header-color");
                 boxVBox.getStyleClass().add("no-border-color");
                 boxVBox.getStyleClass().add("disabled-content-color");
                 break;
 
-            case "evaluation":
-            case "rattrapage":
+            case "Evaluation":
+            case "Rattrapage":
                 headerVBox.getStyleClass().add("accented-header-color");
                 boxVBox.getStyleClass().add("accent-border-color");
                 boxVBox.getStyleClass().add("neutral-content-color");

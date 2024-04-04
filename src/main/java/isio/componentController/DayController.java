@@ -87,7 +87,7 @@ public class DayController {
                 timeString += " / " + currentEvent.getType();
 
             controller.setText(timeString, currentEvent.getLocation(), currentEvent.getDescription());
-            controller.setCssClass(currentEvent.getType());
+            controller.setCssClass(currentEvent.getType().toString());
             controller.setDayLabel(dayLabelHeader);
             controller.setContentPane(contentPane);
             controller.setDimensions(startDateTime.until(currentEvent.getEndDate(), ChronoUnit.MINUTES) / 30);
