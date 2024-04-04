@@ -18,6 +18,10 @@
     -fx-border-color: transparent;
 }
 
+.neutral-border-color {
+    -fx-border-color: #353a3d;
+}
+
 .disabled-header-color {
     -fx-background-color: #2c3032;
 }

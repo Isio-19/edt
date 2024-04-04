@@ -17,9 +17,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import isio.componentController.DayController;
 import isio.componentController.WeekController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
@@ -41,13 +45,19 @@ public class TimeTableController {
     private Pane settingPane;
     @FXML
     private Label contentLabel;
+    @FXML
+    private DatePicker datePicker;
+
+    @SuppressWarnings("rawtypes")
+    @FXML
+    private ComboBox displayModeComboBox;
 
     private List<EventCalendar> calendars;
     private EventCalendar currentCalendar = null;
     private LocalDate today;
 
     // TODO: make into an enum
-    private String displayMode = "week";
+    private String displayMode;
 
     // TODO: get theme for user file
     private String theme = "light";
@@ -58,6 +68,14 @@ public class TimeTableController {
                 root.heightProperty().subtract(menuBar.prefHeightProperty()).subtract(buttonHBox.prefHeightProperty()));
         contentPane.prefWidthProperty().bind(root.widthProperty().subtract(250));
         settingPane.prefWidthProperty().setValue(250);
+
+        today = LocalDate.now();
+
+        datePicker.setValue(today);
+
+        setComboBox();
+
+        setDisplayMode();
 
         // get the ics links from the icsLinks file
         ArrayList<String> links = (ArrayList<String>) readLinksFile();
@@ -73,11 +91,8 @@ public class TimeTableController {
         if (calendars.size() > 0)
             currentCalendar = calendars.get(0);
 
-        today = LocalDate.now();
-
         // print the events of the selected calendar depending on the display type
         // TODO: get the saved displayType depending on the user
-        // displayType = getDisplayType()
 
         displayCalendar();
     }
@@ -111,13 +126,13 @@ public class TimeTableController {
         try {
             resetContentPane();
             switch (displayMode) {
-                case "day":
+                case "Day":
                     showDay();
                     break;
-                case "week":
+                case "Week":
                     showWeek();
                     break;
-                case "month":
+                case "Month":
                     showMonth();
                     break;
                 default:
@@ -255,15 +270,15 @@ public class TimeTableController {
     @FXML
     public void previousDate() {
         switch (displayMode) {
-            case "day":
+            case "Day":
                 if (today.getDayOfWeek() == DayOfWeek.MONDAY)
                     today = today.minusDays(2);
                 today = today.minusDays(1);
                 break;
-            case "week":
+            case "Week":
                 today = today.minusWeeks(1);
                 break;
-            case "month":
+            case "Month":
                 today = today.minusMonths(1);
                 break;
 
@@ -271,21 +286,22 @@ public class TimeTableController {
                 break;
         }
 
+        updateDatePicker();
         displayCalendar();
     }
 
     @FXML
     public void nextDate() {
         switch (displayMode) {
-            case "day":
+            case "Day":
                 if (today.getDayOfWeek() == DayOfWeek.FRIDAY)
                     today = today.plusDays(2);
                 today = today.plusDays(1);
                 break;
-            case "week":
+            case "Week":
                 today = today.plusWeeks(1);
                 break;
-            case "month":
+            case "Month":
                 today = today.plusMonths(1);
                 break;
 
@@ -293,6 +309,7 @@ public class TimeTableController {
                 break;
         }
 
+        updateDatePicker();
         displayCalendar();
     }
 
@@ -310,7 +327,28 @@ public class TimeTableController {
         scene.getStylesheets().add(getClass().getResource("css/lightMode.css").toExternalForm());
     }
 
-    // TODO: intergrate the dateSelector in the FXMl to interact with LocalDate
+    private void updateDatePicker() {
+        datePicker.setValue(today);
+    }
+
+    @FXML
+    public void setDate() {
+        today = datePicker.getValue();
+        displayCalendar();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void setComboBox() {
+        ObservableList<String> data = FXCollections.observableArrayList("Day", "Week", "Month");
+        displayModeComboBox.setItems(data);
+        displayModeComboBox.getSelectionModel().select("Week");
+    }
+
+    @FXML
+    public void setDisplayMode() {
+        displayMode = (String) displayModeComboBox.getSelectionModel().getSelectedItem();
+        displayCalendar();
+    }
 
     @FXML
     public void openAddLinkPopUp() {

@@ -33,7 +33,7 @@ public class DayController {
     public void initialize() {
         dayVBox.getStyleClass().add("component-border");
     }
-    
+
     public void setContentPane(Pane contentPane) {
         this.contentPane = contentPane;
     }
@@ -61,7 +61,9 @@ public class DayController {
         tempEvent = eventList.get(0);
         eightThirtyAm = tempEvent.getStartDate().withHour(8).withMinute(30).withSecond(0).withNano(0);
         sevenPm = tempEvent.getStartDate().withHour(19).withMinute(0).withSecond(0).withNano(0);
-        makeFillerEvent(eightThirtyAm, tempEvent.getStartDate(), dayVBox.getChildren());
+
+        if (!tempEvent.getStartDate().isEqual(eightThirtyAm))
+            makeFillerEvent(eightThirtyAm, tempEvent.getStartDate(), dayVBox.getChildren());
 
         for (int eventIndex = 0; eventIndex < eventList.size(); eventIndex++) {
             Event currentEvent = eventList.get(eventIndex);
@@ -93,13 +95,17 @@ public class DayController {
             controller.setDimensions(startDateTime.until(currentEvent.getEndDate(), ChronoUnit.MINUTES) / 30);
 
             if (eventIndex < eventList.size() - 1) {
-                tempEvent = eventList.get(eventIndex + 1);
-                makeFillerEvent(currentEvent.getEndDate(), tempEvent.getStartDate(), dayVBox.getChildren());
+                Event nextEvent = eventList.get(eventIndex + 1);
+                if (!currentEvent.getEndDate().isEqual(nextEvent.getStartDate())) {
+                    tempEvent = eventList.get(eventIndex + 1);
+                    makeFillerEvent(currentEvent.getEndDate(), tempEvent.getStartDate(), dayVBox.getChildren());
+                }
             }
         }
 
         tempEvent = eventList.get(eventList.size() - 1);
-        makeFillerEvent(tempEvent.getEndDate(), sevenPm, dayVBox.getChildren());
+        if (!tempEvent.getEndDate().isEqual(sevenPm))
+            makeFillerEvent(tempEvent.getEndDate(), sevenPm, dayVBox.getChildren());
     }
 
     private void makeFillerEvent(LocalDateTime start, LocalDateTime end, ObservableList<Node> nodeList)

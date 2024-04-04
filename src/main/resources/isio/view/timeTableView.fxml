@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -15,8 +16,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-   fx:controller="isio.TimeTableController">
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isio.TimeTableController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>
@@ -24,8 +24,7 @@
                <menus>
                   <Menu mnemonicParsing="false" text="File">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openAddLinkPopUp"
-                           text="Import ICS link" />
+                        <MenuItem mnemonicParsing="false" onAction="#openAddLinkPopUp" text="Import ICS link" />
                         <MenuItem mnemonicParsing="false" text="Export " />
                      </items>
                   </Menu>
@@ -41,22 +40,17 @@
                   </Menu>
                </menus>
             </MenuBar>
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-               minWidth="-Infinity" spacing="10.0">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0">
                <children>
-                  <VBox fx:id="calendarVBox" maxHeight="-Infinity" maxWidth="-Infinity"
-                     minHeight="-Infinity" minWidth="-Infinity" spacing="10.0">
+                  <VBox fx:id="calendarVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0">
                      <children>
-                        <HBox fx:id="buttonHBox" alignment="CENTER"
-                           maxWidth="1.7976931348623157E308" spacing="10.0">
+                        <HBox fx:id="buttonHBox" alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0">
                            <children>
-                              <Button fx:id="previousButton" mnemonicParsing="false"
-                                 onAction="#previousDate" text="&lt;" />
+                              <Button fx:id="previousButton" mnemonicParsing="false" onAction="#previousDate" text="&lt;" />
                               <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                               <Label fx:id="contentLabel" alignment="CENTER" text="contentLabel" />
                               <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="nextButton" alignment="CENTER_RIGHT"
-                                 mnemonicParsing="false" onAction="#nextDate" text="&gt;" />
+                              <Button fx:id="nextButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#nextDate" text="&gt;" />
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -71,18 +65,16 @@
                   </VBox>
                   <Separator orientation="VERTICAL" prefHeight="200.0">
                   </Separator>
-                  <VBox fx:id="settingPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
-                     minHeight="-Infinity" minWidth="-Infinity" prefWidth="220.0" spacing="10.0">
+                  <VBox fx:id="settingPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="220.0" spacing="10.0">
                      <children>
                         <Label text="Calendar Settings" />
-                        <DatePicker maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                           minWidth="-Infinity" />
+                        <DatePicker fx:id="datePicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#setDate" />
                         <HBox fx:id="displayType" alignment="CENTER" />
                         <Separator maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                         </Separator>
                         <Label text="Display Settings" />
-                        <ToggleButton mnemonicParsing="false" text="Dark Mode"
-                           onAction="#switchTheme" />
+                        <ComboBox fx:id="displayModeComboBox" onAction="#setDisplayMode" />
+                        <ToggleButton mnemonicParsing="false" onAction="#switchTheme" text="Dark Mode" />
                      </children>
                   </VBox>
                </children>

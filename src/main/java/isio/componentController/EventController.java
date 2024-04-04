@@ -36,13 +36,11 @@ public class EventController {
 
     public void setDimensions(float height) {
         boxVBox.prefHeightProperty().bind(
-                contentPane.prefHeightProperty().subtract(dayLabel.prefHeightProperty()).divide(21).multiply(height));
+                contentPane.prefHeightProperty().subtract(dayLabel.getPrefHeight()).divide(21).multiply(height));
         boxVBox.prefWidthProperty().bind(contentPane.prefWidthProperty().divide(5));
     }
 
     public void setCssClass(String string) {
-        System.out.println(string);
-
         headerVBox.getStyleClass().clear();
         boxVBox.getStyleClass().clear();
         switch (string) {
@@ -61,12 +59,14 @@ public class EventController {
                 break;
 
             case "filler":
+                headerVBox.getStyleClass().add("transparent-content-color");
+                boxVBox.getStyleClass().add("no-border-color");
                 boxVBox.getStyleClass().add("transparent-content-color");
                 break;
 
             default:
                 headerVBox.getStyleClass().add("neutral-header-color");
-                boxVBox.getStyleClass().add("no-border-color");
+                boxVBox.getStyleClass().add("neutral-border-color");
                 boxVBox.getStyleClass().add("neutral-content-color");
                 break;
         }
