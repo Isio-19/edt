@@ -1,4 +1,11 @@
+isio/componentController/DayController.class
+isio/componentController/WeekController.class
+isio/Event.class
+isio/TimeTableController$1.class
+isio/componentController/MonthController.class
+isio/EventComparator.class
+isio/TimeTableController.class
 isio/App.class
-isio/SecondaryController.class
-isio/PrimaryController.class
-isio/CalendarParser.class
+isio/EventCalendar.class
+isio/componentController/EventController.class
+isio/ImportController.class

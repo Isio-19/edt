@@ -1,0 +1,43 @@
+.root {
+    -fx-background-color: #fafafa;
+}
+
+.label {
+    -fx-text-fill: #212121;
+}
+
+.Separator {
+    -fx-border-color: #212121;
+}
+
+.neutral-header-color, .neutral-content-color {
+    -fx-background-color: #d1e8ff;
+}
+
+.no-border-color {
+    -fx-border-color: transparent;
+}
+
+.neutral-border-color {
+    -fx-border-color: #b8cde3;
+}
+
+.disabled-header-color, .disabled-content-color {
+    -fx-background-color: #eaeef2;
+}
+
+.accented-header-color {
+    -fx-background-color: #ef5151;
+}
+
+.accent-border-color {
+    -fx-border-color: #ef5151;
+}
+
+.transparent-content-color {
+    -fx-background-color: transparent;
+}
+
+.component-border {
+    -fx-border-color: #e1e1ff;
+}
